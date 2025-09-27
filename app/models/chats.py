@@ -13,3 +13,4 @@ class Chats(TimestampMixin, Base):
     source_documents: Mapped[str] = mapped_column(String(4000), nullable=True)
 
     user: Mapped["Users"] = relationship(back_populates="chats")
+    details: Mapped[list["ChatDetails"]] = relationship(back_populates="chat")

@@ -12,3 +12,5 @@ class Clients(TimestampMixin, Base):
     contact_email: Mapped[str] = mapped_column(String(100), nullable=True)
 
     users: Mapped[list["Users"]] = relationship(back_populates="client")
+    documents: Mapped[list["Documents"]] = relationship(back_populates="client")
+    table_x_clients: Mapped[list["TableXClients"]] = relationship(back_populates="client")

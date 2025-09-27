@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.db.session import engine
 from app.db.base import Base
 from app.db import loadModels  # <-- importa modelos
-#from app.controllers import ask_controller, ingest_controller  # y tus otros routers
+from app.controller.userController import router as user_router  # importa tu router de usuario
+from app.controller.authController import router as auth_router  # importa tu router de autenticación
+
 
 app = FastAPI(title="Thesis RAG API", version="1.0.0")
 
@@ -18,8 +20,10 @@ async def startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-#app.include_router(ask_controller.router)
-#app.include_router(ingest_controller.router)
+# Incluye todos los routers de tus controladores
+app.include_router(user_router)
+app.include_router(auth_router)
+# Si tienes más controladores, agrégalos aquí
 
 @app.get("/health", tags=["Health"])
 def health():

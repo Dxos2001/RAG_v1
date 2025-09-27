@@ -34,8 +34,6 @@ QS_PARAMS = "charset=utf8mb4"
 
 DATABASE_URL = f"mysql+asyncmy://{DB_USER}:{PW}@{DB_HOST}:{DB_PORT}/{DB_NAME}?{QS_PARAMS}"
 
-print("DB URL ->", DATABASE_URL.replace(PW, "***"))  # debug seguro
-
 engine = create_async_engine(
     DATABASE_URL,
     echo=False,          # pon True si quieres ver los CREATE/SELECT en consola
@@ -45,6 +43,9 @@ engine = create_async_engine(
 
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-async def get_db():
+async def get_db() -> AsyncSession:
     async with AsyncSessionLocal() as session:
-        yield session
+        try:
+            yield session
+        finally:
+            await session.close()

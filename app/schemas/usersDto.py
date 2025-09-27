@@ -6,6 +6,7 @@ from datetime import datetime
 class CreateUsersDto(BaseModel):
     username: str
     email: EmailStr
+    password: str
     full_name: Optional[str] = None
     idClient: int
     swt: Optional[bool] = True
@@ -20,14 +21,12 @@ class UpdateUsersDto(BaseModel):
     updateDate: Optional[str] = datetime.now().isoformat()
 
 class UsersDto(BaseModel):
-    id: int
+    id: Optional[int] = None
     username: str
     email: EmailStr
     full_name: Optional[str] = None
     idClient: int
     swt: bool
-    createDate: str
-    updateDate: Optional[str] = None
 
     class Config:
         orm_mode = True
