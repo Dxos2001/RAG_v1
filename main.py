@@ -5,7 +5,8 @@ from app.db.base import Base
 from app.db import loadModels  # <-- importa modelos
 from app.controller.userController import router as user_router  # importa tu router de usuario
 from app.controller.authController import router as auth_router  # importa tu router de autenticación
-
+from app.controller.clientController import router as client_router  # importa tu router de cliente
+from app.controller.tableXclientController import router as tableXclient_router  # importa tu router de tablaXcliente
 
 app = FastAPI(title="Thesis RAG API", version="1.0.0")
 
@@ -23,6 +24,8 @@ async def startup():
 # Incluye todos los routers de tus controladores
 app.include_router(user_router)
 app.include_router(auth_router)
+app.include_router(client_router)
+app.include_router(tableXclient_router)
 # Si tienes más controladores, agrégalos aquí
 
 @app.get("/health", tags=["Health"])
